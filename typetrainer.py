@@ -41,13 +41,14 @@ for i in textfiles:
 
 choice = input('(enter för slumpmässig text): \n\n')
 if choice == '':
+    choice = textfiles[random.randint(0,len(textfiles)-1)]
+    text = open(f'texts/{diff}/{choice}', 'r').read()
+    
+try:
+    text = open(f'texts/{diff}/{choice}', 'r').read()
+except:
+    print('Den texten finns inte. Här kommer en slumpmässig text')
     text = open(f'texts/{diff}/{textfiles[random.randint(0,len(textfiles)-1)]}', 'r').read()
-else:
-    try:
-        text = open(f'texts/{diff}/{choice}', 'r').read()
-    except:
-        print('Den texten finns inte. Här kommer en slumpmässig text')
-        text = open(f'texts/{diff}/{textfiles[random.randint(0,len(textfiles)-1)]}', 'r').read()
 
 words = text.split(' ')
 
