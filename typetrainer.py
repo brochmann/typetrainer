@@ -18,6 +18,7 @@ print('Svårighetsgrad?')
 print('1: lätt')
 print('2: medel')
 print('3: svår')
+print('4: egna texter')
 diffn = input()
 if diffn == '1':
     diff = 'lätt'
@@ -25,6 +26,8 @@ elif diffn == '2':
     diff = 'medel'
 elif diffn == '3':
     diff = 'svår'
+elif diffn == '4':
+    diff = 'egna'
 else:
     print('Det där är inte en giltig siffra. Det blir automatiskt en svår nu')
     diff = 'svår'
@@ -43,7 +46,7 @@ choice = input('(enter för slumpmässig text): \n\n')
 if choice == '':
     choice = textfiles[random.randint(0,len(textfiles)-1)]
     text = open(f'texts/{diff}/{choice}', 'r').read()
-    
+
 try:
     text = open(f'texts/{diff}/{choice}', 'r').read()
 except:
@@ -93,6 +96,16 @@ t = (time.time()-t0)/60
 score = round(n/t,1)
 
 hs = eval(open('highscores', 'r').read())
+cm = eval(open('commonlymissed', 'r').read())
+
+for i in m:
+    try:
+        cm[i] += 1
+    except:
+        cm[i] = 1
+
+with open('commonlymissed', 'w') as file:
+    file.write(str(cm))
 
 try:
     hs[choice]
@@ -108,7 +121,6 @@ if score > hs[choice]:
         file.write(str(hs))
 
 print(f'Hastighet: {score} ord per minut')
-print(f'Tidigare bästa tid: {hs[choice]} ord per minut')
 print(f'{len(m)} missade ord: ')
 m = Counter(m)
 keys = [*m.keys()]
